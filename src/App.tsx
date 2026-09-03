@@ -1,122 +1,226 @@
-import { useState } from 'react'
-import reactLogo from './assets/react.svg'
-import viteLogo from './assets/vite.svg'
-import heroImg from './assets/hero.png'
-import './App.css'
+import { useState } from "react";
+import type {
+  AssessmentAnswer,
+  AssessmentType,
+} from "./types/emora";
+
+import { phq9Questions } from "./data/phq9Questions";
+import { gad7Questions } from "./data/gad7Questions";
+
+import {
+  calculatePHQ9Score,
+  getPHQ9Severity,
+  createGAD7Result,
+} from "./services/assessmentService";
+
+import AssessmentSelector from "./components/AssessmentSelector";
+
+import "./App.css";
 
 function App() {
-  const [count, setCount] = useState(0)
+  const [assessmentType, setAssessmentType] =
+    useState<AssessmentType | null>(null);
+
+  const [currentQuestion, setCurrentQuestion] = useState(0);
+
+  const [answers, setAnswers] = useState<AssessmentAnswer[]>([]);
+
+  const [completed, setCompleted] = useState(false);
+
+  if (!assessmentType) {
+    return (
+      <main className="app">
+        <div className="assessment-container">
+          <header className="brand">
+            <h1>emora</h1>
+            <p>A gentle check-in with yourself</p>
+          </header>
+
+          <AssessmentSelector onSelect={setAssessmentType} />
+        </div>
+      </main>
+    );
+  }
+
+  const questions =
+    assessmentType === "PHQ9"
+      ? phq9Questions
+      : gad7Questions;
+
+  const question = questions[currentQuestion];
+
+  const selectedAnswer = answers.find(
+    (answer) => answer.questionId === question.id
+  );
+
+  const handleAnswer = (value: number) => {
+    const newAnswer: AssessmentAnswer = {
+      questionId: question.id,
+      value,
+    };
+
+    setAnswers((previousAnswers) => {
+      const filteredAnswers = previousAnswers.filter(
+        (answer) => answer.questionId !== question.id
+      );
+
+      return [...filteredAnswers, newAnswer];
+    });
+  };
+
+  const handleNext = () => {
+    if (!selectedAnswer) return;
+
+    if (currentQuestion === questions.length - 1) {
+      setCompleted(true);
+      return;
+    }
+
+    setCurrentQuestion((previous) => previous + 1);
+  };
+
+  const handleBack = () => {
+    if (currentQuestion === 0) {
+      setAssessmentType(null);
+      setAnswers([]);
+      return;
+    }
+
+    setCurrentQuestion((previous) => previous - 1);
+  };
+
+  const handleRestart = () => {
+    setAnswers([]);
+    setCurrentQuestion(0);
+    setCompleted(false);
+  };
+
+  if (completed) {
+    let score = 0;
+    let severity = "";
+
+    if (assessmentType === "PHQ9") {
+      score = calculatePHQ9Score(answers);
+      severity = getPHQ9Severity(score);
+    } else {
+      const result = createGAD7Result(answers);
+      score = result.score;
+      severity = result.severity;
+    }
+
+    const maxScore = assessmentType === "PHQ9" ? 27 : 21;
+
+    return (
+      <main className="app">
+        <div className="assessment-container">
+          <header className="brand">
+            <h1>emora</h1>
+            <p>Your mental wellness space</p>
+          </header>
+
+          <section className="result-card">
+            <h2>Assessment Complete</h2>
+
+            <p>
+              Your {assessmentType === "PHQ9" ? "PHQ-9" : "GAD-7"} score
+            </p>
+
+            <div className="result-score">
+              {score} / {maxScore}
+            </div>
+
+            <div className="result-severity">
+              Severity: <strong>{severity}</strong>
+            </div>
+
+            <button type="button" onClick={handleRestart}>
+              Take Again
+            </button>
+          </section>
+        </div>
+      </main>
+    );
+  }
+
+  const progress =
+    ((currentQuestion + 1) / questions.length) * 100;
 
   return (
-    <>
-      <section id="center">
-        <div className="hero">
-          <img src={heroImg} className="base" width="170" height="179" alt="" />
-          <img src={reactLogo} className="framework" alt="React logo" />
-          <img src={viteLogo} className="vite" alt="Vite logo" />
-        </div>
-        <div>
-          <h1>Get started</h1>
-          <p>
-            Edit <code>src/App.tsx</code> and save to test <code>HMR</code>
-          </p>
-        </div>
-        <button
-          type="button"
-          className="counter"
-          onClick={() => setCount((count) => count + 1)}
-        >
-          Count is {count}
-        </button>
-      </section>
+    <main className="app">
+      <div className="assessment-container">
+        <header className="brand">
+          <h1>emora</h1>
+          <p>A gentle check-in with yourself</p>
+        </header>
 
-      <div className="ticks"></div>
+        <section className="progress-section">
+          <div className="progress-text">
+            <span>
+              {assessmentType === "PHQ9"
+                ? "PHQ-9 Assessment"
+                : "GAD-7 Assessment"}
+            </span>
 
-      <section id="next-steps">
-        <div id="docs">
-          <svg className="icon" role="presentation" aria-hidden="true">
-            <use href="/icons.svg#documentation-icon"></use>
-          </svg>
-          <h2>Documentation</h2>
-          <p>Your questions, answered</p>
-          <ul>
-            <li>
-              <a href="https://vite.dev/" target="_blank">
-                <img className="logo" src={viteLogo} alt="" />
-                Explore Vite
-              </a>
-            </li>
-            <li>
-              <a href="https://react.dev/" target="_blank">
-                <img className="button-icon" src={reactLogo} alt="" />
-                Learn more
-              </a>
-            </li>
-          </ul>
-        </div>
-        <div id="social">
-          <svg className="icon" role="presentation" aria-hidden="true">
-            <use href="/icons.svg#social-icon"></use>
-          </svg>
-          <h2>Connect with us</h2>
-          <p>Join the Vite community</p>
-          <ul>
-            <li>
-              <a href="https://github.com/vitejs/vite" target="_blank">
-                <svg
-                  className="button-icon"
-                  role="presentation"
-                  aria-hidden="true"
-                >
-                  <use href="/icons.svg#github-icon"></use>
-                </svg>
-                GitHub
-              </a>
-            </li>
-            <li>
-              <a href="https://chat.vite.dev/" target="_blank">
-                <svg
-                  className="button-icon"
-                  role="presentation"
-                  aria-hidden="true"
-                >
-                  <use href="/icons.svg#discord-icon"></use>
-                </svg>
-                Discord
-              </a>
-            </li>
-            <li>
-              <a href="https://x.com/vite_js" target="_blank">
-                <svg
-                  className="button-icon"
-                  role="presentation"
-                  aria-hidden="true"
-                >
-                  <use href="/icons.svg#x-icon"></use>
-                </svg>
-                X.com
-              </a>
-            </li>
-            <li>
-              <a href="https://bsky.app/profile/vite.dev" target="_blank">
-                <svg
-                  className="button-icon"
-                  role="presentation"
-                  aria-hidden="true"
-                >
-                  <use href="/icons.svg#bluesky-icon"></use>
-                </svg>
-                Bluesky
-              </a>
-            </li>
-          </ul>
-        </div>
-      </section>
+            <span>
+              {currentQuestion + 1} / {questions.length}
+            </span>
+          </div>
 
-      <div className="ticks"></div>
-      <section id="spacer"></section>
-    </>
-  )
+          <div className="progress-bar">
+            <div
+              className="progress-fill"
+              style={{ width: `${progress}%` }}
+            />
+          </div>
+        </section>
+
+        <section className="question-card">
+          <h2>{question.text}</h2>
+
+          <div className="options">
+            {question.options.map((option) => {
+              const isSelected =
+                selectedAnswer?.value === option.value;
+
+              return (
+                <button
+                  key={option.value}
+                  type="button"
+                  className={`option-button ${
+                    isSelected ? "selected" : ""
+                  }`}
+                  onClick={() => handleAnswer(option.value)}
+                  aria-pressed={isSelected}
+                >
+                  {option.label}
+                </button>
+              );
+            })}
+          </div>
+
+          <div className="navigation">
+            <button
+              type="button"
+              className="back-button"
+              onClick={handleBack}
+            >
+              Back
+            </button>
+
+            <button
+              type="button"
+              onClick={handleNext}
+              disabled={!selectedAnswer}
+            >
+              {currentQuestion === questions.length - 1
+                ? "View Results"
+                : "Next"}
+            </button>
+          </div>
+        </section>
+      </div>
+    </main>
+  );
 }
 
-export default App
+export default App;

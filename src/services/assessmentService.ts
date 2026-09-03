@@ -1,32 +1,70 @@
-import type { AssessmentAnswer,AssessmentResult,} from "../types/emora";
-const validateAssessmentAnswers = (answers: AssessmentAnswer[]): void => {
-  for (const answer of answers) {
-    if (!Number.isInteger(answer.value) || answer.value < 0 || answer.value > 3) {
-      throw new Error(
-        `Invalid answer value for question ${answer.questionId}`
-      );
-    }
-  }
+import type {
+  AssessmentAnswer,
+  AssessmentResult,
+} from "../types/emora";
+
+import {
+  calculateAssessmentScore,
+  type AssessmentConfig,
+} from "./assessmentEngine";
+
+const phq9Config: AssessmentConfig = {
+  type: "PHQ9",
+  questionCount: 9,
+  maxScore: 27,
+  getSeverity: (score) => {
+    if (score <= 4) return "Minimal";
+    if (score <= 9) return "Mild";
+    if (score <= 14) return "Moderate";
+    if (score <= 19) return "Moderately severe";
+    return "Severe";
+  },
 };
 
-const PHQ9_QUESTION_COUNT = 9;
+const gad7Config: AssessmentConfig = {
+  type: "GAD7",
+  questionCount: 7,
+  maxScore: 21,
+  getSeverity: (score) => {
+    if (score <= 4) return "Minimal";
+    if (score <= 9) return "Mild";
+    if (score <= 14) return "Moderate";
+    return "Severe";
+  },
+};
+
 export const calculatePHQ9Score = (
   answers: AssessmentAnswer[]
 ): number => {
-    if (answers.length !== PHQ9_QUESTION_COUNT) {
-    throw new Error("PHQ-9 requires answers to all 9 questions");
-  }
-  validateAssessmentAnswers(answers);
-  
-  return answers.reduce((total, answer) => total + answer.value, 0);
+  return calculateAssessmentScore(answers, phq9Config);
+};
+
+export const calculateGAD7Score = (
+  answers: AssessmentAnswer[]
+): number => {
+  return calculateAssessmentScore(answers, gad7Config);
 };
 
 export const getPHQ9Severity = (score: number): string => {
-  if (score <= 4) return "Minimal";
-  if (score <= 9) return "Mild";
-  if (score <= 14) return "Moderate";
-  if (score <= 19) return "Moderately severe";
-  return "Severe";
+  return phq9Config.getSeverity(score);
+};
+export const createGAD7Result = (
+  answers: AssessmentAnswer[]
+): AssessmentResult => {
+  const score = calculateGAD7Score(answers);
+
+  return {
+    type: "GAD7",
+    score,
+    maxScore: 21,
+    severity: getGAD7Severity(score),
+    answers,
+    completedAt: new Date().toISOString(),
+  };
+};
+
+export const getGAD7Severity = (score: number): string => {
+  return gad7Config.getSeverity(score);
 };
 
 export const createPHQ9Result = (

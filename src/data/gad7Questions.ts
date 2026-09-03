@@ -1,0 +1,74 @@
+import type { AssessmentQuestion } from "../types/emora";
+
+export const gad7Questions: AssessmentQuestion[] = [
+  {
+    id: 1,
+    text: "Feeling nervous, anxious, or on edge?",
+    options: [
+      { label: "Not at all", value: 0 },
+      { label: "Several days", value: 1 },
+      { label: "More than half the days", value: 2 },
+      { label: "Nearly every day", value: 3 },
+    ],
+  },
+  {
+    id: 2,
+    text: "Not being able to stop or control worrying?",
+    options: [
+      { label: "Not at all", value: 0 },
+      { label: "Several days", value: 1 },
+      { label: "More than half the days", value: 2 },
+      { label: "Nearly every day", value: 3 },
+    ],
+  },
+  {
+    id: 3,
+    text: "Worrying too much about different things?",
+    options: [
+      { label: "Not at all", value: 0 },
+      { label: "Several days", value: 1 },
+      { label: "More than half the days", value: 2 },
+      { label: "Nearly every day", value: 3 },
+    ],
+  },
+  {
+    id: 4,
+    text: "Trouble relaxing?",
+    options: [
+      { label: "Not at all", value: 0 },
+      { label: "Several days", value: 1 },
+      { label: "More than half the days", value: 2 },
+      { label: "Nearly every day", value: 3 },
+    ],
+  },
+  {
+    id: 5,
+    text: "Being so restless that it is hard to sit still?",
+    options: [
+      { label: "Not at all", value: 0 },
+      { label: "Several days", value: 1 },
+      { label: "More than half the days", value: 2 },
+      { label: "Nearly every day", value: 3 },
+    ],
+  },
+  {
+    id: 6,
+    text: "Becoming easily annoyed or irritable?",
+    options: [
+      { label: "Not at all", value: 0 },
+      { label: "Several days", value: 1 },
+      { label: "More than half the days", value: 2 },
+      { label: "Nearly every day", value: 3 },
+    ],
+  },
+  {
+    id: 7,
+    text: "Feeling afraid as if something awful might happen?",
+    options: [
+      { label: "Not at all", value: 0 },
+      { label: "Several days", value: 1 },
+      { label: "More than half the days", value: 2 },
+      { label: "Nearly every day", value: 3 },
+    ],
+  },
+];
