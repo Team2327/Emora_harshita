@@ -5,6 +5,7 @@ import type {
 } from "./types/emora";
 
 import Chatbot from "./components/chatbot";
+import MoodTracker from "./components/MoodTracker";
 
 import { phq9Questions } from "./data/phq9Questions";
 import { gad7Questions } from "./data/gad7Questions";
@@ -40,6 +41,7 @@ function App() {
 
           <AssessmentSelector onSelect={setAssessmentType} />
           <Chatbot/>
+          <MoodTracker />
         </div>
       </main>
     );

@@ -298,3 +298,81 @@
 .safety-actions button:hover {
   background: #fffafa;
 }
+
+.mood-card {
+  width: 100%;
+  max-width: 720px;
+  margin: 24px auto 0;
+  padding: 24px;
+  background: #ffffff;
+  border-radius: 20px;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.08);
+}
+
+.mood-header {
+  margin-bottom: 20px;
+}
+
+.mood-header h2 {
+  margin-bottom: 6px;
+}
+
+.mood-header p {
+  margin: 0;
+  color: #666;
+}
+
+.mood-options {
+  display: grid;
+  grid-template-columns: repeat(5, 1fr);
+  gap: 8px;
+  margin-bottom: 18px;
+}
+
+.mood-option {
+  padding: 12px 8px;
+  border: 1px solid #d5e3da;
+  border-radius: 12px;
+  background: #ffffff;
+  color: #333;
+  cursor: pointer;
+}
+
+.mood-option:hover {
+  background: #f5faf7;
+}
+
+.mood-option.selected {
+  background: #d9f2e3;
+  border-color: #5b9f76;
+  font-weight: 600;
+}
+
+.mood-card textarea {
+  width: 100%;
+  box-sizing: border-box;
+  resize: vertical;
+  padding: 12px;
+  border: 1px solid #d5e3da;
+  border-radius: 12px;
+  font-family: inherit;
+  font-size: 1rem;
+  margin-bottom: 14px;
+  outline: none;
+}
+
+.mood-card textarea:focus {
+  border-color: #5b9f76;
+}
+
+.mood-success {
+  margin-top: 14px;
+  color: #3d7d57;
+  font-weight: 600;
+}
+
+@media (max-width: 600px) {
+  .mood-options {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
