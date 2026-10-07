@@ -161,3 +161,140 @@
     font-size: 1.2rem;
   }
 }
+
+.chatbot-card {
+  width: 100%;
+  max-width: 720px;
+  margin: 24px auto 0;
+  padding: 24px;
+  background: #ffffff;
+  border-radius: 20px;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.08);
+}
+
+.chatbot-header {
+  margin-bottom: 20px;
+}
+
+.chatbot-header h2 {
+  margin-bottom: 6px;
+}
+
+.chatbot-header p {
+  margin: 0;
+  color: #666;
+}
+
+.chatbot-messages {
+  min-height: 280px;
+  max-height: 420px;
+  overflow-y: auto;
+  padding: 16px;
+  background: #f5faf7;
+  border-radius: 16px;
+  margin-bottom: 16px;
+}
+
+.chatbot-empty {
+  text-align: center;
+  color: #666;
+  padding: 70px 20px;
+}
+
+.chatbot-empty p {
+  margin: 6px 0;
+}
+
+.chat-message {
+  display: flex;
+  margin-bottom: 12px;
+}
+
+.chat-message span {
+  max-width: 75%;
+  padding: 11px 15px;
+  border-radius: 16px;
+  line-height: 1.5;
+}
+
+.chat-message.user {
+  justify-content: flex-end;
+}
+
+.chat-message.user span {
+  background: #d9f2e3;
+  border-bottom-right-radius: 4px;
+}
+
+.chat-message.assistant {
+  justify-content: flex-start;
+}
+
+.chat-message.assistant span {
+  background: #ffffff;
+  border: 1px solid #e4eee8;
+  border-bottom-left-radius: 4px;
+}
+
+.chatbot-input-area {
+  display: flex;
+  gap: 10px;
+}
+
+.chatbot-input-area input {
+  flex: 1;
+  padding: 12px 15px;
+  border: 1px solid #d5e3da;
+  border-radius: 12px;
+  outline: none;
+  font-size: 1rem;
+}
+
+.chatbot-input-area input:focus {
+  border-color: #5b9f76;
+}
+
+.chatbot-input-area button {
+  white-space: nowrap;
+}
+
+.safety-panel {
+  margin-top: 16px;
+  padding: 16px;
+  border-radius: 14px;
+  background: #fff4f4;
+  border: 1px solid #f0caca;
+  color: #7a2e2e;
+}
+
+.safety-panel strong {
+  display: block;
+  margin-bottom: 6px;
+}
+
+.safety-panel p {
+  margin: 0;
+  line-height: 1.5;
+}
+
+.safety-actions {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  margin-top: 14px;
+}
+
+.safety-actions button {
+  width: 100%;
+  padding: 10px 14px;
+  border: 1px solid #d9bcbc;
+  border-radius: 10px;
+  background: #ffffff;
+  color: #7a2e2e;
+  cursor: pointer;
+  text-align: left;
+}
+
+.safety-actions button:hover {
+  background: #fffafa;
+}

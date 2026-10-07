@@ -4,6 +4,8 @@ import type {
   AssessmentType,
 } from "./types/emora";
 
+import Chatbot from "./components/chatbot";
+
 import { phq9Questions } from "./data/phq9Questions";
 import { gad7Questions } from "./data/gad7Questions";
 
@@ -37,6 +39,7 @@ function App() {
           </header>
 
           <AssessmentSelector onSelect={setAssessmentType} />
+          <Chatbot/>
         </div>
       </main>
     );
