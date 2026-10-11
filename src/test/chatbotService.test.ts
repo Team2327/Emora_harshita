@@ -3,7 +3,7 @@ import {
   createInitialChatbotState,
   getChatbotResponse,
   processChatbotMessage,
- } from "../services/chatbotService.ts";
+ } from "../services/chatbotService";
 
 describe("Chatbot service", () => {
   it("detects a greeting", () => {

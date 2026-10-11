@@ -26,3 +26,17 @@ export interface AssessmentResult {
   answers: AssessmentAnswer[];
   completedAt: string;
 }
+
+
+export type RecommendationCategory =
+  | "self_care"
+  | "professional_support"
+  | "emergency_support";
+
+export interface Recommendation {
+  id: string;
+  title: string;
+  description: string;
+  category: RecommendationCategory;
+  reason: string;
+}

@@ -4,8 +4,15 @@ import {
   createMoodEntry,
   getMoodLabel,
 } from "../services/moodService";
+import { saveMoodEntry } from "../services/moodStorage";
 
-function MoodTracker() {
+interface MoodTrackerProps {
+  onMoodSaved: () => void;
+}
+
+function MoodTracker({
+  onMoodSaved,
+}: MoodTrackerProps) {
   const [selectedMood, setSelectedMood] =
     useState<MoodLevel | null>(null);
 
@@ -26,11 +33,11 @@ function MoodTracker() {
 
     const entry = createMoodEntry(
       selectedMood,
-      note
-    );
+      note);
 
-    console.log("Mood entry:", entry);
-
+    saveMoodEntry(entry);
+    onMoodSaved();
+    
     setSaved(true);
     setNote("");
   };

@@ -376,3 +376,456 @@
     grid-template-columns: repeat(2, 1fr);
   }
 }
+
+.mood-history-card {
+  width: 100%;
+  max-width: 720px;
+  margin: 24px auto 0;
+  padding: 24px;
+  background: #ffffff;
+  border-radius: 20px;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.08);
+}
+
+.mood-history-card .mood-header {
+  margin-bottom: 18px;
+}
+
+.mood-history-empty {
+  padding: 30px 20px;
+  text-align: center;
+  color: #666;
+  background: #f5faf7;
+  border-radius: 14px;
+}
+
+.mood-history-empty p {
+  margin: 6px 0;
+}
+
+.mood-history-list {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.mood-history-entry {
+  padding: 14px 16px;
+  border: 1px solid #e1ece5;
+  border-radius: 14px;
+  background: #f9fcfa;
+}
+
+.mood-history-top {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 12px;
+}
+
+.mood-history-top strong {
+  color: #3d7d57;
+}
+
+.mood-history-top span {
+  color: #777;
+  font-size: 0.85rem;
+}
+
+.mood-history-entry p {
+  margin: 8px 0 0;
+  color: #555;
+  line-height: 1.5;
+}
+
+@media (max-width: 600px) {
+  .mood-history-top {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+}
+
+
+/* 7-Day Mood Trend */
+.mood-trend-card {
+  background: #ffffff;
+  border: 1px solid #e8e9f0;
+  border-radius: 20px;
+  padding: 24px;
+  margin-top: 24px;
+  box-shadow: 0 4px 16px rgba(40, 45, 80, 0.05);
+}
+
+.mood-trend-card h2 {
+  margin: 0 0 8px;
+  color: #30344b;
+  font-size: 1.25rem;
+}
+
+.mood-trend-card > p {
+  margin: 0;
+  color: #777b8e;
+  font-size: 0.92rem;
+}
+
+.mood-trend-chart {
+  display: flex;
+  align-items: flex-end;
+  justify-content: space-around;
+  gap: 12px;
+  height: 190px;
+  margin-top: 24px;
+}
+
+.mood-trend-day {
+  display: flex;
+  flex: 1;
+  min-width: 0;
+  height: 100%;
+  flex-direction: column;
+  align-items: center;
+  justify-content: flex-end;
+  gap: 8px;
+}
+
+.mood-trend-count {
+  color: #555b70;
+  font-size: 0.85rem;
+  font-weight: 600;
+}
+
+.mood-trend-bar-track {
+  display: flex;
+  align-items: flex-end;
+  justify-content: center;
+  width: 100%;
+  max-width: 38px;
+  height: 120px;
+  overflow: hidden;
+  background: #f0f1f8;
+  border-radius: 12px;
+}
+
+.mood-trend-bar {
+  width: 100%;
+  background: linear-gradient(180deg, #9b91ed, #7770d6);
+  border-radius: 12px;
+  transition: height 0.3s ease;
+}
+
+.mood-trend-label {
+  color: #777b8e;
+  font-size: 0.8rem;
+  font-weight: 500;
+}
+
+@media (max-width: 480px) {
+  .mood-trend-card {
+    padding: 18px 14px;
+  }
+
+  .mood-trend-chart {
+    gap: 6px;
+  }
+
+  .mood-trend-label {
+    font-size: 0.7rem;
+  }
+}
+
+/* =========================
+   MOOD INSIGHTS
+========================= */
+
+.mood-insights-card {
+  background: linear-gradient(145deg, #ffffff, #f8f7ff);
+  border: 1px solid #e8e5f5;
+  border-radius: 20px;
+  padding: 24px;
+  margin-top: 24px;
+  box-shadow: 0 4px 16px rgba(40, 45, 80, 0.05);
+}
+
+.mood-insights-card h2 {
+  color: #30344b;
+  font-size: 1.3rem;
+  margin: 0 0 8px;
+}
+
+.mood-insights-card > p {
+  color: #777b8e;
+  font-size: 0.92rem;
+  line-height: 1.6;
+  margin: 0 0 20px;
+}
+
+.mood-insights-total {
+  background: #efedff;
+  border-radius: 14px;
+  padding: 18px;
+  margin-bottom: 20px;
+  display: flex;
+  align-items: center;
+  gap: 16px;
+}
+
+.mood-insights-total strong {
+  color: #7167c8;
+  font-size: 2rem;
+  line-height: 1;
+}
+
+.mood-insights-total span {
+  color: #555b70;
+  font-size: 0.9rem;
+}
+
+.mood-insights-breakdown {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 12px;
+}
+
+.mood-insights-item {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 12px;
+  padding: 14px 16px;
+  background: #ffffff;
+  border: 1px solid #eeeef5;
+  border-radius: 12px;
+  color: #555b70;
+}
+
+.mood-insights-item strong {
+  color: #7167c8;
+  font-size: 1.05rem;
+}
+
+.mood-insights-disclaimer {
+  color: #85889a;
+  font-size: 0.8rem;
+  line-height: 1.6;
+  margin: 20px 0 0;
+}
+
+/* =========================
+   JOURNAL
+========================= */
+
+.journal-card {
+  background: #ffffff;
+  border: 1px solid #e8e9f0;
+  border-radius: 20px;
+  padding: 24px;
+  margin-top: 24px;
+  box-shadow: 0 4px 16px rgba(40, 45, 80, 0.05);
+}
+
+.journal-card h2 {
+  color: #30344b;
+  font-size: 1.3rem;
+  margin: 0 0 8px;
+}
+
+.journal-card > p {
+  color: #777b8e;
+  font-size: 0.92rem;
+  line-height: 1.6;
+  margin: 0 0 20px;
+}
+
+.journal-card textarea,
+.journal-card input,
+.journal-textarea {
+  width: 100%;
+  box-sizing: border-box;
+  min-height: 140px;
+  padding: 16px;
+  border: 1px solid #dedfed;
+  border-radius: 14px;
+  background: #fcfcff;
+  color: #30344b;
+  font: inherit;
+  line-height: 1.6;
+  resize: vertical;
+  outline: none;
+  transition: border-color 0.2s, box-shadow 0.2s;
+}
+
+.journal-card textarea:focus,
+.journal-card input:focus,
+.journal-textarea:focus {
+  border-color: #9489e8;
+  box-shadow: 0 0 0 3px rgba(148, 137, 232, 0.15);
+}
+
+.journal-card button {
+  margin-top: 16px;
+  padding: 12px 22px;
+  border: none;
+  border-radius: 12px;
+  background: #7770d6;
+  color: #ffffff;
+  font: inherit;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background 0.2s, transform 0.2s;
+}
+
+.journal-card button:hover {
+  background: #625bc2;
+  transform: translateY(-1px);
+}
+
+.journal-card button:focus-visible {
+  outline: 3px solid #bdb7fa;
+  outline-offset: 3px;
+}
+
+/* =========================
+   PREVIOUS JOURNAL ENTRIES
+========================= */
+
+.journal-history-card {
+  background: #ffffff;
+  border: 1px solid #e8e9f0;
+  border-radius: 20px;
+  padding: 24px;
+  margin-top: 24px;
+  box-shadow: 0 4px 16px rgba(40, 45, 80, 0.05);
+}
+
+.journal-history-card h2 {
+  color: #30344b;
+  font-size: 1.25rem;
+  margin: 0 0 18px;
+}
+
+.journal-history-list {
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+}
+
+.journal-history-entry {
+  padding: 18px;
+  background: #faf9ff;
+  border: 1px solid #eeecf8;
+  border-left: 4px solid #9489e8;
+  border-radius: 12px;
+  overflow-wrap: anywhere;
+}
+
+.journal-history-entry time,
+.journal-history-entry span {
+  display: block;
+  margin-bottom: 10px;
+  color: #85889a;
+  font-size: 0.8rem;
+}
+
+.journal-history-entry p {
+  color: #484c61;
+  font-size: 0.95rem;
+  line-height: 1.7;
+  margin: 0;
+  white-space: pre-wrap;
+}
+
+.journal-history-empty {
+  padding: 24px;
+  border-radius: 14px;
+  background: #faf9ff;
+  color: #85889a;
+  text-align: center;
+  line-height: 1.6;
+}
+
+/* MOBILE RESPONSIVENESS */
+
+@media (max-width: 480px) {
+  .mood-insights-card,
+  .journal-card,
+  .journal-history-card {
+    padding: 18px 14px;
+  }
+
+  .mood-insights-breakdown {
+    grid-template-columns: 1fr;
+  }
+
+  .mood-insights-total {
+    padding: 15px;
+  }
+
+  .journal-history-entry {
+    padding: 14px;
+  }
+}
+
+
+/* Mood Insights: individual mood cards */
+
+.mood-insights-list {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 12px;
+  margin-top: 22px;
+}
+
+.mood-insights-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  padding: 16px;
+  background: #ffffff;
+  border: 1px solid #eeecf8;
+  border-radius: 14px;
+  color: #555b70;
+  font-size: 0.95rem;
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.mood-insights-row:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 5px 14px rgba(40, 45, 80, 0.06);
+}
+
+.mood-insights-row span {
+  line-height: 1.4;
+}
+
+.mood-insights-row strong {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-width: 32px;
+  height: 32px;
+  padding: 0 8px;
+  box-sizing: border-box;
+  border-radius: 10px;
+  background: #efedff;
+  color: #7167c8;
+  font-size: 1rem;
+}
+
+.mood-insights-note {
+  margin-top: 22px !important;
+  color: #85889a !important;
+  font-size: 0.82rem !important;
+  line-height: 1.7 !important;
+}
+
+@media (max-width: 480px) {
+  .mood-insights-list {
+    grid-template-columns: 1fr;
+    gap: 10px;
+  }
+
+  .mood-insights-row {
+    padding: 14px;
+  }
+}

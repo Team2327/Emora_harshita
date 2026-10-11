@@ -1,15 +1,19 @@
 import { useState } from "react";
 import type {
   AssessmentAnswer,
+  AssessmentResult,
   AssessmentType,
 } from "./types/emora";
-
-import Chatbot from "./components/chatbot";
+import Recommendations from "./components/Recommendations";
+import Journal from "./components/Journal";
+import MoodHistory from "./components/MoodHistory";
+import JournalHistory from "./components/JournalHistory";
+import Chatbot from "./components/Chatbot";
 import MoodTracker from "./components/MoodTracker";
 
 import { phq9Questions } from "./data/phq9Questions";
 import { gad7Questions } from "./data/gad7Questions";
-
+import MoodInsights from "./components/MoodInsights";
 import {
   calculatePHQ9Score,
   getPHQ9Severity,
@@ -30,6 +34,14 @@ function App() {
 
   const [completed, setCompleted] = useState(false);
 
+  const [moodRefreshKey, setMoodRefreshKey] =
+  useState(0);
+  
+  const [assessmentResult, setAssessmentResult] =
+  useState<AssessmentResult | null>(null);
+
+  const [journalRefreshKey, setJournalRefreshKey] = useState(0);
+
   if (!assessmentType) {
     return (
       <main className="app">
@@ -41,7 +53,22 @@ function App() {
 
           <AssessmentSelector onSelect={setAssessmentType} />
           <Chatbot/>
-          <MoodTracker />
+          <MoodTracker
+              onMoodSaved={() =>
+                setMoodRefreshKey((previous) => previous + 1)
+              }
+            />
+          <MoodHistory key={moodRefreshKey} />
+
+          <MoodInsights refreshKey={moodRefreshKey} />
+
+          <Journal
+            onEntrySaved={() =>
+              setJournalRefreshKey((previous) => previous + 1)
+            }
+          />
+
+          <JournalHistory key={journalRefreshKey} />
         </div>
       </main>
     );
@@ -75,11 +102,26 @@ function App() {
 
   const handleNext = () => {
     if (!selectedAnswer) return;
+ 
+  if (currentQuestion === questions.length - 1) {
+    const result: AssessmentResult =
+      assessmentType === "PHQ9"
+        ? {
+            type: "PHQ9",
+            score: calculatePHQ9Score(answers),
+            maxScore: 27,
+            severity: getPHQ9Severity(
+              calculatePHQ9Score(answers)
+            ),
+            answers,
+            completedAt: new Date().toISOString(),
+          }
+        : createGAD7Result(answers);
 
-    if (currentQuestion === questions.length - 1) {
-      setCompleted(true);
-      return;
-    }
+    setAssessmentResult(result);
+    setCompleted(true);
+    return;
+  }
 
     setCurrentQuestion((previous) => previous + 1);
   };
@@ -98,6 +140,7 @@ function App() {
     setAnswers([]);
     setCurrentQuestion(0);
     setCompleted(false);
+    setAssessmentResult(null);
   };
 
   if (completed) {
@@ -137,6 +180,10 @@ function App() {
             <div className="result-severity">
               Severity: <strong>{severity}</strong>
             </div>
+
+            {assessmentResult && (
+              <Recommendations assessment={assessmentResult} />
+            )}
 
             <button type="button" onClick={handleRestart}>
               Take Again
