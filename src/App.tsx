@@ -62,6 +62,11 @@ function App() {
 
           <MoodInsights refreshKey={moodRefreshKey} />
 
+          <Recommendations
+            assessment={assessmentResult}
+            refreshKey={moodRefreshKey}
+          />
+
           <Journal
             onEntrySaved={() =>
               setJournalRefreshKey((previous) => previous + 1)
@@ -182,7 +187,10 @@ function App() {
             </div>
 
             {assessmentResult && (
-              <Recommendations assessment={assessmentResult} />
+              <Recommendations
+                assessment={assessmentResult}
+                refreshKey={moodRefreshKey}
+              />
             )}
 
             <button type="button" onClick={handleRestart}>

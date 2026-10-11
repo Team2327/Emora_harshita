@@ -139,4 +139,43 @@ describe("getRecommendations", () => {
     ).toBe(false);
     });
 
+    
+  it.each([
+    {
+      moods: ["sad", "very_sad", "sad"],
+      expectedTitle: "Give yourself some extra support",
+    },
+    {
+      moods: ["good", "very_good", "good"],
+      expectedTitle: "Notice what's helping you",
+    },
+    {
+      moods: ["sad", "good", "neutral"],
+      expectedTitle: "Get curious about your mood",
+    },
+  ])(
+    "personalizes reflection for recent mood patterns",
+    ({ moods, expectedTitle }) => {
+      const entries: MoodEntry[] = moods.map((mood, index) => ({
+        id: `pattern-${index}`,
+        mood: mood as MoodEntry["mood"],
+        createdAt: new Date().toISOString(),
+      }));
+
+      const result = getRecommendations(
+        createAssessment("Minimal"),
+        entries
+      );
+
+      expect(
+        result.some(
+          (item) =>
+            item.id === "mood-reflection" &&
+            item.title === expectedTitle
+        )
+      ).toBe(true);
+    }
+  );
+
+
 });

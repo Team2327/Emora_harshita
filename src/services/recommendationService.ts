@@ -4,7 +4,7 @@ import type {
   Recommendation,
 } from "../types/emora";
 import type { MoodEntry } from "../types/mood";
-
+import { getMoodPattern } from "./moodPatternService";
 export const getRecommendations = (
   assessment: AssessmentResult | null,
   moodEntries: MoodEntry[]
@@ -117,17 +117,42 @@ export const getRecommendations = (
   }
 
   // Encourage reflection after at least three mood check-ins.
-  if (moodEntries.length >= 3) {
+  
+  // Personalize reflection using recent mood patterns.
+  const moodPattern = getMoodPattern(moodEntries);
+
+  if (moodPattern === "mostly_low") {
     recommendations.push({
       id: "mood-reflection",
-      title: "Reflect on your mood check-ins",
+      title: "Give yourself some extra support",
       description:
-        "Look back at your recent entries and notice whether anything seems connected to how you have been feeling. Consider whether any activities, situations, or routines stand out.",
+        "Your recent check-ins include more low moods than positive moods. Consider talking with someone you trust or choosing one small, manageable activity for today.",
       category: "self_care",
       reason:
-        "You have recorded at least three mood check-ins.",
+        "Your recent mood check-ins may be a useful starting point for reflection.",
+    });
+  } else if (moodPattern === "mostly_positive") {
+    recommendations.push({
+      id: "mood-reflection",
+      title: "Notice what's helping you",
+      description:
+        "Your recent check-ins include more positive moods. Reflect on any routines, activities, or connections you'd like to continue making time for.",
+      category: "self_care",
+      reason:
+        "Reflecting on helpful experiences can support your personal wellbeing habits.",
+    });
+  } else if (moodPattern === "mixed") {
+    recommendations.push({
+      id: "mood-reflection",
+      title: "Get curious about your mood",
+      description:
+        "Your recent check-ins show a mix of moods. You could reflect on what was happening on different days and whether anything stands out.",
+      category: "self_care",
+      reason:
+        "Noticing changes can help you reflect on your experiences without judging yourself.",
     });
   }
+
 
   return recommendations;
 };

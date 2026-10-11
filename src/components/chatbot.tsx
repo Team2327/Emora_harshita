@@ -76,48 +76,59 @@ function Chatbot() {
         </button>
       </div>
 
-     {state.isEscalated && (
+      {state.isEscalated && (
         <div className="safety-panel">
-            <strong>You don't have to handle this alone.</strong>
+          <strong>You don't have to handle this alone.</strong>
 
-            <p>
+          <p>
             Please choose the kind of support that feels most
             appropriate right now.
+          </p>
+
+          <div className="safety-actions">
+            <button
+              type="button"
+              onClick={() => {
+                window.location.href =
+                  "mailto:?subject=I need some support&body=I'm having a difficult time and could use someone to talk to.";
+              }}
+            >
+              Contact a Trusted Person
+            </button>
+
+            <button
+              type="button"
+              onClick={() => {
+                window.location.href = "tel:112";
+              }}
+            >
+              Contact Emergency Services
+            </button>
+
+
+            <p className="professional-support-note">
+              Need someone to talk to? India's Tele-MANAS helpline
+              is available at <strong>14416</strong>.
             </p>
 
-            <div className="safety-actions">
-            <button
-                type="button"
-                onClick={() => {
-                    window.location.href =
-                    "mailto:?subject=I need some support&body=I'm having a difficult time and could use someone to talk to.";
-                }}
-                >
-                Contact a Trusted Person
-            </button>
 
             <button
-                type="button"
-                onClick={() => {
-                    window.location.href = "tel:112";
-                }}
-                >
-                Contact Emergency Services
+              type="button"
+              onClick={() =>
+                window.open(
+                  "https://telemanas.mohfw.gov.in/home",
+                  "_blank",
+                  "noopener,noreferrer"
+                )
+              }
+            >
+              Seek Professional Help
             </button>
 
-            <button
-                type="button"
-                onClick={() => {
-                    alert(
-                    "Professional support resources will be available here."
-                    );
-                }}
-                >
-                Seek Professional Help
-            </button>
-            </div>
+
+          </div>
         </div>
-        )}
+      )}
     </section>
   );
 }
